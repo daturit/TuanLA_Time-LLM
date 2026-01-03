@@ -39,6 +39,8 @@ class TokenEmbedding(nn.Module):
                     m.weight, mode='fan_in', nonlinearity='leaky_relu')
 
     def forward(self, x):
+        # Cast input to same dtype as conv weights for mixed precision compatibility
+        x = x.to(self.tokenConv.weight.dtype)
         x = self.tokenConv(x.permute(0, 2, 1)).transpose(1, 2)
         return x
 
@@ -104,6 +106,8 @@ class TimeFeatureEmbedding(nn.Module):
         self.embed = nn.Linear(d_inp, d_model, bias=False)
 
     def forward(self, x):
+        # Cast input to same dtype as embed weights for mixed precision compatibility
+        x = x.to(self.embed.weight.dtype)
         return self.embed(x)
 
 

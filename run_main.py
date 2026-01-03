@@ -244,6 +244,13 @@ for ii in range(args.itr):
         accelerator.print(
             "Epoch: {0} | Train Loss: {1:.7f} Vali Loss: {2:.7f} Test Loss: {3:.7f} MAE Loss: {4:.7f}".format(
                 epoch + 1, train_loss, vali_loss, test_loss, test_mae_loss))
+        
+        # Print learned patch length info (only for frequency_aware mode)
+        if accelerator.is_local_main_process:
+            # Get the underlying model (handles DeepSpeed/DDP wrapping)
+            unwrapped_model = accelerator.unwrap_model(model)
+            if hasattr(unwrapped_model, 'print_patch_info'):
+                unwrapped_model.print_patch_info(epoch=epoch + 1)
 
         early_stopping(vali_loss, model, path)
         if early_stopping.early_stop:
