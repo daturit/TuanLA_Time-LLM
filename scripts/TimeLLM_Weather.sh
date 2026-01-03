@@ -1,7 +1,7 @@
 model_name=TimeLLM
 train_epochs=10
 learning_rate=0.01
-llama_layers=32
+llm_layers=6
 
 master_port=00097
 num_process=8
