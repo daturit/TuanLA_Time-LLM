@@ -1,11 +1,11 @@
 model_name=TimeLLM
-train_epochs=5
+train_epochs=10
 learning_rate=0.01
-llm_layers=32
+llm_layers=6
 
 master_port=00097
 num_process=8
-batch_size=24
+batch_size=32
 d_model=16
 d_ff=32
 
@@ -21,16 +21,18 @@ accelerate launch \
   --model_id traffic_512_96 \
   --model $model_name \
   --data Traffic \
-  --features M \
+  --features S \
   --seq_len 512 \
   --label_len 48 \
   --pred_len 96 \
   --e_layers 2 \
   --d_layers 1 \
   --factor 3 \
-  --enc_in 862 \
-  --dec_in 862 \
-  --c_out 862 \
+  --enc_in 21 \
+  --dec_in 21 \
+  --c_out 21 \
+  --d_model 32 \
+  --d_ff 32 \
   --batch_size $batch_size \
   --learning_rate $learning_rate \
   --llm_model GPT2 \
