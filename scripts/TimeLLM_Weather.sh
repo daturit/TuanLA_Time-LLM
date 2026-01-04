@@ -22,7 +22,7 @@ accelerate launch \
   --model $model_name \
   --data Weather \
   --features M \
-  --seq_len 512 \
+  --seq_len 96 \
   --label_len 48 \
   --pred_len 96 \
   --e_layers 2 \
